@@ -13,13 +13,18 @@ print(len(maps))
 
 # maptiers
 
-maptiers = 'INSERT INTO `maptiers` VALUES '
 
-for m in maps:
-    item = [value for value in ck_maptier if m in value][0]
-    maptiers += (f"('{item[0]}', {item[1]}),")
+def add_maptiers():
+    maptiers = 'INSERT INTO `maptiers` VALUES '
 
-maptiers = maptiers[:-1]+';'
+    for m in maps:
+        item = [value for value in ck_maptier if m in value][0]
+        maptiers += (f"('{item[0]}', {item[1]}),")
 
-with open('bhoptimer/maptiers.sql', 'w') as f:
-    f.write(maptiers)
+    maptiers = maptiers[:-1]+';'
+
+    with open('bhoptimer/maptiers.sql', 'w') as f:
+        f.write(maptiers)
+# add_maptiers()
+
+# zones
