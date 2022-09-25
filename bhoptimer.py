@@ -1,4 +1,5 @@
 from ck_maptier import ck_maptier
+from ck_zones import ck_zones
 # read css maps
 cssmaps = []
 with open('cssmaps.txt') as f:
@@ -28,3 +29,24 @@ def add_maptiers():
 # add_maptiers()
 
 # zones
+
+
+def add_zones():
+    mapzones = 'INSERT INTO `mapzones` VALUES '
+    i = 0
+    for m in maps:
+
+        items = [value for value in ck_zones if m in value]
+        if items:
+            for item in items:
+                i += 1
+                mapzones += (
+                    f"('{i}', {item[0]}, {item[2]}, {item[3]}, {item[4]}, {item[5]}, {item[6]}, {item[7]}, {item[8]}, {item[9]} ),")
+
+    mapzones = mapzones[:-1]+';'
+
+    with open('bhoptimer/mapzones.sql', 'w') as f:
+        f.write(mapzones)
+
+
+add_zones()
