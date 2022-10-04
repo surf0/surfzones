@@ -31,7 +31,7 @@ PRIMARY KEY (`map`)
 `target` varchar(63) DEFAULT NULL,
 
 ### startpositions
-
+ss
 `auth` int(11) NOT NULL,
 `track` tinyint(4) NOT NULL,
 `map` varchar(255) NOT NULL,
@@ -44,3 +44,20 @@ PRIMARY KEY (`map`)
 `angles_only` tinyint(1) DEFAULT NULL,
 
 
+zonetype:
+"Zone_Start",0
+"Zone_End",1
+"Zone_Respawn",2
+"Zone_Stop",3
+"Zone_Slay",4
+"Zone_Freestyle",5
+"Zone_CustomSpeedLimit",6
+"Zone_Teleport",7
+"Zone_CustomSpawn",8
+"Zone_Easybhop",9
+"Zone_Slide",10
+"Zone_Airaccelerate",11
+"Zone_Stage",12
+"Zone_NoTimerGravity",13
+"Zone_Gravity",14
+"Zone_Speedmod",15

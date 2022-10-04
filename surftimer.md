@@ -36,3 +36,7 @@ PRIMARY KEY (**mapname**)
 `onejumplimit` int(12) NOT NULL DEFAULT '1',
 `prespeed` int(64) NOT NULL DEFAULT '350',
 PRIMARY KEY (`mapname`,`zoneid`)
+
+
+Zonetypes:
+Start(1), End(2), Stage(3), Checkpoint(4), Speed(5), TeleToStart(6), Validator(7), Chekcer(8), Stop(0)
