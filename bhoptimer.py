@@ -83,9 +83,13 @@ INSERT INTO `mapzones` VALUES """
                     track = int(item[13].split(" ")[1])
                 else:
                     track = 0
+                if item[2] == 3:
+                    stageid = item[3]+2
+                else:
+                    stageid = 0
                 if item[2] < 9 and zonetypes[item[2]] != -1:
                     mapzones += (
-                        f"({i}, '{item[0]}', {zonetypes[item[2]]}, {track}, {item[4]}, {item[5]}, {item[6]}, {item[7]}, {item[8]}, {item[9]}, 0, 0, 0, 0, 0, 0, '' ),")
+                        f"({i}, '{item[0]}', {zonetypes[item[2]]}, {track}, {item[4]}, {item[5]}, {item[6]}, {item[7]}, {item[8]}, {item[9]}, 0, 0, 0, 0, {stageid}, 0, '' ),")
 
     mapzones = mapzones[:-1]+';'
 
@@ -93,5 +97,5 @@ INSERT INTO `mapzones` VALUES """
         f.write(mapzones)
 
 
-add_maptiers()
+# add_maptiers()
 add_zones()
