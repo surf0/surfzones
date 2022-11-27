@@ -1,5 +1,7 @@
 from ck_maptier import ck_maptier
 from ck_zones import ck_zones
+from newnames import new_names
+
 # read css maps
 cssmaps = []
 with open('cssmaps.txt') as f:
@@ -10,7 +12,8 @@ mapnamelist = [i[0] for i in ck_maptier]
 maps = list(set(cssmaps) & set(mapnamelist))
 notcommon = [value for value in cssmaps if value not in mapnamelist]
 
-print(len(maps))
+maps += new_names.keys()
+print(len(notcommon))
 
 # maptiers
 
@@ -72,6 +75,17 @@ INSERT INTO `mapzones` VALUES """
     for m in maps:
 
         items = [value for value in ck_zones if m in value]
+
+        # items = []
+        # for map2 in ck_zones:
+        #     if m in map2:
+        #         items.append(map2)
+        #     elif map2[0] in new_names:
+        #         map2[0] = new_names[map2[0]]
+        #         items.append(map2)
+        # i += len(items)
+        # continue
+
         if items:
             for item in items:
                 i += 1
@@ -97,5 +111,63 @@ INSERT INTO `mapzones` VALUES """
         f.write(mapzones)
 
 
+def add_new_maps():
+    maptiers = "INSERT IGNORE INTO `maptiers` VALUES "
+
+    for m, csgo in new_names.items():
+        print(m)
+        item = [value for value in ck_maptier if m in value or csgo in value][0]
+        print(item)
+        if item[0] in new_names.values():
+            item[0] = m
+        maptiers += (f"('{item[0]}', {item[1]}),")
+
+    maptiers = maptiers[:-1]+';'
+
+    mapzones = "INSERT IGNORE INTO `mapzones` VALUES "
+    i = 6551
+    for m, csgo in new_names.items():
+
+        items = [value for value in ck_zones if m in value or csgo in value]
+
+        # items = []
+        # for map2 in ck_zones:
+        #     if m in map2:
+        #         items.append(map2)
+        #     elif map2[0] in new_names:
+        #         map2[0] = new_names[map2[0]]
+        #         items.append(map2)
+        # i += len(items)
+        # continue
+
+        if items:
+            for item in items:
+                i += 1
+                # map zonetypes surftimer (index) - bhoptimer (value)
+                zonetypes = [3, 0, 1, 12, -1, -1, 2, -1, -1]
+                if item[13].lower() == 'bonus':
+                    track = 1
+                elif len(item[13].split(" ")) == 2:
+                    track = int(item[13].split(" ")[1])
+                else:
+                    track = 0
+                if item[2] == 3:
+                    stageid = item[3]+2
+                else:
+                    stageid = 0
+                if item[0] in new_names.values():
+                    item[0] = m
+                if item[2] < 9 and zonetypes[item[2]] != -1:
+                    mapzones += (
+                        f"({i}, '{item[0]}', {zonetypes[item[2]]}, {track}, {item[4]}, {item[5]}, {item[6]}, {item[7]}, {item[8]}, {item[9]}, 0, 0, 0, 0, {stageid}, 0, '' ),")
+
+    mapzones = mapzones[:-1]+';'
+
+    print(i)
+
+    with open('bhoptimer/newmaps.sql', 'w') as f:
+        f.write(maptiers + "\n\n\n" + mapzones)
+
+
 # add_maptiers()
-add_zones()
+add_new_maps()

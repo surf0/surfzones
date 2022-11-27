@@ -1,4 +1,0 @@
-# maptier
-
-
-# mapzones
